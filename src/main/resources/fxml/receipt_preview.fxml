@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+
+<BorderPane prefHeight="650.0" prefWidth="460.0" stylesheets="@../css/style.css"
+            xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="com.supermarket.ui.controllers.ReceiptDialogController">
+    <top>
+        <VBox spacing="4.0" style="-fx-background-color: #0f172a; -fx-padding: 14 18 14 18;" BorderPane.alignment="CENTER">
+            <Label fx:id="lblReceiptTitle" style="-fx-font-size: 15px; -fx-font-weight: bold; -fx-text-fill: white;" text="Thermal Receipt Preview" />
+            <Label style="-fx-font-size: 11px; -fx-text-fill: #94a3b8;" text="Standard 40-Column ESC/POS Customer Bill" />
+        </VBox>
+    </top>
+    <center>
+        <VBox alignment="CENTER" spacing="10.0" style="-fx-background-color: #f1f5f9; -fx-padding: 16;" BorderPane.alignment="CENTER">
+            <VBox styleClass="receipt-paper" VBox.vgrow="ALWAYS">
+                <TextArea fx:id="txtReceiptContent" editable="false" prefHeight="480.0" prefWidth="400.0"
+                          styleClass="receipt-text-area" wrapText="false" VBox.vgrow="ALWAYS" />
+            </VBox>
+            <Label fx:id="lblDialogStatus" maxWidth="1.7976931348623157E308" text="" wrapText="true" />
+        </VBox>
+    </center>
+    <bottom>
+        <HBox alignment="CENTER_RIGHT" spacing="10.0" style="-fx-background-color: white; -fx-border-color: #e2e8f0; -fx-border-width: 1 0 0 0; -fx-padding: 12 16 12 16;" BorderPane.alignment="CENTER">
+            <Button fx:id="btnSaveToFile" onAction="#handleSaveToFile" styleClass="button" text="💾 Save to File" />
+            <Button fx:id="btnPrintReceipt" onAction="#handlePrintReceipt" styleClass="button-success" text="🖨️ Print Receipt" />
+            <Button fx:id="btnClose" onAction="#handleClose" styleClass="button-primary" text="Close" />
+        </HBox>
+    </bottom>
+</BorderPane>

@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.Tab?>
+<?import javafx.scene.control.TabPane?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+
+<BorderPane prefHeight="800.0" prefWidth="1200.0" stylesheets="@../css/style.css"
+            xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="com.supermarket.ui.controllers.MainController">
+
+    <!-- Top App Header -->
+    <top>
+        <HBox alignment="CENTER_LEFT" spacing="16.0" styleClass="app-header" BorderPane.alignment="CENTER">
+            <VBox spacing="2.0">
+                <Label styleClass="app-brand-title" text="🛒 Supermarket Automation Software (SAS)" />
+                <Label styleClass="app-brand-subtitle" text="Production-Grade POS Billing, Dynamic Catalog &amp; Profit Tracking" />
+            </VBox>
+            <HBox HBox.hgrow="ALWAYS" />
+            <Label fx:id="lblHeaderStatusDb" styleClass="header-status-badge" text="● SQLite WAL Active" />
+            <Label fx:id="lblHeaderUser" styleClass="status-bar-pill" text="👤 Operator: Cashier-1" />
+            <Label fx:id="lblHeaderClock" styleClass="header-clock" text="🕒 2026-10-02 19:00:00" />
+        </HBox>
+    </top>
+
+    <!-- Center Tabbed Interface -->
+    <center>
+        <TabPane fx:id="mainTabPane" tabClosingPolicy="UNAVAILABLE" BorderPane.alignment="CENTER">
+            <tabs>
+                <!-- Tab 1: Point of Sale (POS) -->
+                <Tab fx:id="tabPos" text="Point of Sale (POS)">
+                    <fx:include fx:id="posTab" source="pos.fxml" />
+                </Tab>
+
+                <!-- Tab 2: Inventory Catalog -->
+                <Tab fx:id="tabInventory" text="Inventory Catalog">
+                    <fx:include fx:id="inventoryTab" source="inventory.fxml" />
+                </Tab>
+
+                <!-- Tab 3: Restock Management -->
+                <Tab fx:id="tabRestock" text="Restock Management">
+                    <fx:include fx:id="restockTab" source="restock.fxml" />
+                </Tab>
+
+                <!-- Tab 4: Dynamic Price Management -->
+                <Tab fx:id="tabPrice" text="Price Management">
+                    <fx:include fx:id="priceTab" source="price.fxml" />
+                </Tab>
+
+                <!-- Tab 5: Sales Analytics & Profit Tracking -->
+                <Tab fx:id="tabAnalytics" text="Sales Analytics">
+                    <fx:include fx:id="analyticsTab" source="analytics.fxml" />
+                </Tab>
+            </tabs>
+        </TabPane>
+    </center>
+
+    <!-- Bottom Status Bar -->
+    <bottom>
+        <HBox alignment="CENTER_LEFT" spacing="14.0" styleClass="status-bar" BorderPane.alignment="CENTER">
+            <Label fx:id="lblStatusDb" text="Database: Connected (SQLite Foreign Keys &amp; WAL Mode Enforced)" />
+            <Label text="|" />
+            <Label fx:id="lblStatusUser" text="Active Session: Cashier-1 / Terminal POS-01" />
+            <HBox HBox.hgrow="ALWAYS" />
+            <Label fx:id="lblStatusClock" text="System Time: 2026-10-02 19:00:00" />
+        </HBox>
+    </bottom>
+</BorderPane>

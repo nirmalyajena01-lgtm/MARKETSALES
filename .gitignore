@@ -1,0 +1,10 @@
+target/
+*.log
+.idea/
+*.iml
+.vscode/
+supermarket.db*
+latest_otp.txt
+*.zip
+.gemini/
+dependency-reduced-pom.xml

@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.CheckBox?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+
+<BorderPane stylesheets="@../css/style.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="com.supermarket.ui.controllers.InventoryController">
+    <padding>
+        <Insets bottom="14.0" left="14.0" right="14.0" top="14.0" />
+    </padding>
+
+    <top>
+        <!-- Search and Filter Controls Card -->
+        <VBox spacing="10.0" styleClass="card">
+            <BorderPane.margin>
+                <Insets bottom="12.0" />
+            </BorderPane.margin>
+            <HBox alignment="CENTER_LEFT" spacing="12.0">
+                <Label styleClass="card-title" text="Inventory Catalog &amp; Real-Time Stock Tracking" />
+                <HBox HBox.hgrow="ALWAYS" />
+                <Label fx:id="lblTotalItems" style="-fx-font-weight: bold; -fx-text-fill: #475569;" text="Total Products: 0" />
+                <Label fx:id="lblLowStockCount" style="-fx-font-weight: bold; -fx-text-fill: #dc2626;" text="Low Stock Items: 0" />
+            </HBox>
+            <HBox alignment="CENTER_LEFT" spacing="10.0">
+                <TextField fx:id="txtSearch" prefHeight="36.0" prefWidth="300.0" promptText="🔍 Search code, name, category..." />
+                <ComboBox fx:id="cmbCategory" prefHeight="36.0" prefWidth="200.0" promptText="All Categories" />
+                <CheckBox fx:id="chkLowStockOnly" mnemonicParsing="false" style="-fx-font-weight: bold; -fx-text-fill: #b45309;" text="⚠️ Low Stock Alert Only" />
+                <HBox HBox.hgrow="ALWAYS" />
+                <Button fx:id="btnRefresh" onAction="#handleRefresh" prefHeight="36.0" styleClass="button-primary" text="🔄 Refresh Catalog" />
+            </HBox>
+        </VBox>
+    </top>
+
+    <center>
+        <!-- Table Card -->
+        <VBox styleClass="card" VBox.vgrow="ALWAYS">
+            <TableView fx:id="tableInventory" VBox.vgrow="ALWAYS">
+                <columns>
+                    <TableColumn fx:id="colCode" prefWidth="110.0" text="Item Code" />
+                    <TableColumn fx:id="colName" prefWidth="240.0" text="Product Name" />
+                    <TableColumn fx:id="colCategory" prefWidth="130.0" text="Category" />
+                    <TableColumn fx:id="colCostPrice" prefWidth="100.0" style="-fx-alignment: CENTER_RIGHT;" text="Cost Price" />
+                    <TableColumn fx:id="colSellingPrice" prefWidth="110.0" style="-fx-alignment: CENTER_RIGHT;" text="Selling Price" />
+                    <TableColumn fx:id="colCurrentStock" prefWidth="100.0" style="-fx-alignment: CENTER;" text="Current Stock" />
+                    <TableColumn fx:id="colMinThreshold" prefWidth="100.0" style="-fx-alignment: CENTER;" text="Min Threshold" />
+                    <TableColumn fx:id="colStockStatus" prefWidth="130.0" style="-fx-alignment: CENTER;" text="Stock Status" />
+                </columns>
+                <columnResizePolicy>
+                    <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
+                </columnResizePolicy>
+            </TableView>
+        </VBox>
+    </center>
+</BorderPane>
