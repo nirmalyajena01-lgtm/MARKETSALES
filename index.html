@@ -1,0 +1,778 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#0e382b">
+  <meta name="description" content="Marketline - Enterprise Supermarket Point of Sale and Inventory Management System">
+  <meta property="og:title" content="Marketline POS">
+  <meta property="og:description" content="Secure retail POS checkout and real-time inventory automation">
+  <title>Marketline | Store operations</title>
+  <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+  <link rel="alternate icon" href="/favicon.ico">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500;600&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Playfair+Display:ital,wght@0,600;0,700;1,600&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/app.css">
+  <script src="/app.js" defer></script>
+</head>
+<body>
+
+  <!-- =========================================================================
+       1 & 2. LOGIN & TWO-STEP AUTHENTICATION SCREEN (SPLIT DESIGN)
+       ========================================================================= -->
+  <div id="login-screen" class="login-screen">
+    <div class="login-split-card">
+
+      <!-- LEFT SIDE: BRANDING SHOWCASE -->
+      <aside class="login-brand-side">
+        <div class="brand-hero">
+          <div class="brand-cart-icon">
+            <svg viewBox="0 0 48 48" width="54" height="54" fill="none">
+              <path d="M6 10h6l4.5 22h21l3.5-16H14" stroke="#f1c768" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+              <circle cx="19" cy="38" r="3.5" fill="#f1c768"/>
+              <circle cx="35" cy="38" r="3.5" fill="#f1c768"/>
+              <path d="M19 18h18M20.5 24h15" stroke="#f1c768" stroke-width="2.5" stroke-linecap="round"/>
+            </svg>
+          </div>
+          <h1 class="brand-title-hero">Marketline</h1>
+          <p class="brand-tagline-hero">Your Store. Smarter.</p>
+        </div>
+
+        <div class="login-feature-pills">
+          <div class="feat-pill">
+            <span class="feat-icon">
+              <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+            </span>
+            <span>Secure Access</span>
+          </div>
+          <div class="feat-pill">
+            <span class="feat-icon">
+              <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+            </span>
+            <span>Two-Factor Authentication</span>
+          </div>
+          <div class="feat-pill">
+            <span class="feat-icon">
+              <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg>
+            </span>
+            <span>Built for Retail</span>
+          </div>
+        </div>
+      </aside>
+
+      <!-- RIGHT SIDE: INTERACTIVE AUTH FORM -->
+      <main class="login-form-side">
+
+        <!-- STEPPER BAR -->
+        <div class="auth-stepper" id="auth-stepper">
+          <div class="step-indicator active" id="step-ind-1">
+            <span class="step-circle">1</span>
+            <span class="step-label">Login</span>
+          </div>
+          <span class="step-connector"></span>
+          <div class="step-indicator" id="step-ind-2">
+            <span class="step-circle">2</span>
+            <span class="step-label">Verify</span>
+          </div>
+        </div>
+
+        <!-- Alert messages -->
+        <div id="login-error-alert" class="login-alert" hidden></div>
+        <div id="step2-error-alert" class="login-alert" hidden></div>
+
+        <!-- ================= STEP 1: CREDENTIALS ================= -->
+        <form id="login-step1-form" class="auth-form-step active" autocomplete="off">
+          <div class="auth-form-header">
+            <h2>Welcome Back</h2>
+            <p>Sign in to continue to Marketline</p>
+          </div>
+
+          <!-- Operator Role Selector -->
+          <div class="quick-role-chips">
+            <button type="button" class="role-pill" data-role-user="cashier01">
+              <span class="role-pill-dot"></span>
+              <strong>Cashier</strong>
+              <small>POS</small>
+            </button>
+            <button type="button" class="role-pill" data-role-user="manager">
+              <span class="role-pill-dot mgr"></span>
+              <strong>Manager</strong>
+              <small>Admin</small>
+            </button>
+            <button type="button" class="role-pill" data-role-user="staff">
+              <span class="role-pill-dot stf"></span>
+              <strong>Staff</strong>
+              <small>Stock</small>
+            </button>
+          </div>
+
+          <!-- Username Input -->
+          <div class="auth-group">
+            <label for="login-username">Operator ID / Username</label>
+            <div class="input-icon-field">
+              <span class="field-icon">
+                <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+              </span>
+              <input id="login-username" name="username" type="text" placeholder="Enter operator username" required autocomplete="username">
+            </div>
+          </div>
+
+          <!-- Password Input -->
+          <div class="auth-group">
+            <label for="login-password">Password</label>
+            <div class="input-icon-field">
+              <span class="field-icon">
+                <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>
+              </span>
+              <input id="login-password" name="password" type="password" placeholder="Enter password" required autocomplete="current-password">
+              <button type="button" class="btn-eye-toggle" id="btn-toggle-password" title="Show or hide password" aria-label="Toggle password visibility">
+                <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z"/><circle cx="12" cy="12" r="3"/></svg>
+              </button>
+            </div>
+          </div>
+
+          <!-- Role Select Field -->
+          <div class="auth-group">
+            <label for="login-role-select">Role</label>
+            <div class="select-field-wrap">
+              <select id="login-role-select" name="role" autocomplete="off">
+                <option value="cashier01">Cashier (Front POS)</option>
+                <option value="manager">Store Manager (Full Admin)</option>
+                <option value="staff">Inventory Staff (Receiving)</option>
+              </select>
+            </div>
+          </div>
+
+          <!-- Security Captcha -->
+          <div class="captcha-embed-card">
+            <div class="captcha-embed-header">
+              <span class="captcha-title">Security Captcha</span>
+              <span class="captcha-badge">Distortion Code</span>
+            </div>
+
+            <div class="captcha-visual-row">
+              <div id="canvas-holder" class="canvas-holder">
+                <div class="captcha-loading">Loading CAPTCHA...</div>
+              </div>
+              <button type="button" class="btn-refresh-captcha" id="btn-refresh-captcha" title="New Captcha Code" aria-label="Refresh captcha image">
+                <svg class="refresh-icon" viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><path d="M23 4v6h-6"/><path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"/></svg>
+              </button>
+            </div>
+
+            <div class="captcha-input-row">
+              <input id="login-captcha" name="captcha" type="text" placeholder="Type the 5 characters above" maxlength="6" autocomplete="off" required>
+              <span class="captcha-status-icon" id="captcha-status-icon"></span>
+            </div>
+          </div>
+
+          <button type="submit" class="auth-cta-button" id="btn-step1-submit">
+            <span class="btn-text">Continue</span>
+            <span class="btn-arrow-icon">
+              <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+            </span>
+          </button>
+        </form>
+
+        <!-- ================= STEP 2: 2FA VERIFICATION ================= -->
+        <form id="login-step2-form" class="auth-form-step" hidden autocomplete="off">
+          <div class="auth-form-header">
+            <h2>Verify Your Identity</h2>
+            <p>Enter the 6-digit code sent to your registered device.</p>
+          </div>
+
+          <div class="step2-dispatched-card">
+            <span class="device-icon">
+              <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2"><rect x="5" y="2" width="14" height="20" rx="2" ry="2"/><line x1="12" y1="18" x2="12.01" y2="18"/></svg>
+            </span>
+            <div class="device-copy">
+              <span>Verification code sent to</span>
+              <strong id="step2-masked-dest">+91 ******4321</strong>
+              <small class="step2-console-hint">Enter the 6-digit verification code received</small>
+            </div>
+          </div>
+
+          <!-- Live On-Screen OTP Display -->
+          <div id="dev-otp-display" class="dev-otp-display" style="display:none;margin:14px 0 16px;padding:12px 16px;background:#ecfdf5;border:1.5px solid #10b981;border-radius:10px;text-align:center;color:#065f46;font-size:0.95rem;font-weight:600;"></div>
+
+          <!-- 6-digit PIN Boxes -->
+          <div class="otp-inputs-wrapper" id="otp-inputs-wrapper">
+            <input id="otp-digit-1" name="otp_digit_1" type="text" class="otp-digit" maxlength="1" inputmode="numeric" pattern="[0-9]*" autofocus aria-label="Digit 1" autocomplete="one-time-code">
+            <input id="otp-digit-2" name="otp_digit_2" type="text" class="otp-digit" maxlength="1" inputmode="numeric" pattern="[0-9]*" aria-label="Digit 2" autocomplete="off">
+            <input id="otp-digit-3" name="otp_digit_3" type="text" class="otp-digit" maxlength="1" inputmode="numeric" pattern="[0-9]*" aria-label="Digit 3" autocomplete="off">
+            <input id="otp-digit-4" name="otp_digit_4" type="text" class="otp-digit" maxlength="1" inputmode="numeric" pattern="[0-9]*" aria-label="Digit 4" autocomplete="off">
+            <input id="otp-digit-5" name="otp_digit_5" type="text" class="otp-digit" maxlength="1" inputmode="numeric" pattern="[0-9]*" aria-label="Digit 5" autocomplete="off">
+            <input id="otp-digit-6" name="otp_digit_6" type="text" class="otp-digit" maxlength="1" inputmode="numeric" pattern="[0-9]*" aria-label="Digit 6" autocomplete="off">
+          </div>
+
+          <div class="resend-row">
+            <span id="otp-timer-text">Resend code in <strong id="otp-timer-count">28s</strong></span>
+            <button type="button" class="text-link-button" id="btn-resend-otp" disabled>Resend code</button>
+          </div>
+
+          <div class="switch-method-row">
+            <button type="button" class="text-link-button subtle" id="btn-back-to-step1">Use a different method</button>
+          </div>
+
+          <button type="submit" class="auth-cta-button" id="btn-step2-submit">
+            <span class="btn-text">Verify</span>
+          </button>
+        </form>
+
+        <!-- Footer legal and support links -->
+        <div class="login-footer-links" style="display:flex;justify-content:center;gap:16px;margin-top:24px;font-size:0.82rem;color:#64748b;">
+          <a href="#" id="link-terms" style="color:#64748b;text-decoration:none;">Terms of Service</a>
+          <span>•</span>
+          <a href="#" id="link-privacy" style="color:#64748b;text-decoration:none;">Privacy Policy</a>
+          <span>•</span>
+          <a href="#" id="link-support" style="color:#64748b;text-decoration:none;">Contact Support</a>
+        </div>
+      </main>
+    </div>
+  </div>
+
+  <!-- =========================================================================
+       MAIN APPLICATION SHELL (SIDEBAR + TOPBAR + SCREENS)
+       ========================================================================= -->
+  <div class="app-shell" id="app-shell" hidden>
+
+    <!-- SIDEBAR NAVIGATION -->
+    <aside class="side-rail">
+      <div class="rail-brand-header">
+        <a class="brand-link" href="#dashboard" aria-label="Marketline home">
+          <span class="brand-cart-mini">
+            <svg viewBox="0 0 32 32" width="22" height="22" fill="none">
+              <path d="M4 7h4l3 15h14l2.5-11H9.5" stroke="#f1c768" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/>
+              <circle cx="13" cy="26" r="2.5" fill="#f1c768"/>
+              <circle cx="24" cy="26" r="2.5" fill="#f1c768"/>
+            </svg>
+          </span>
+          <span class="brand-title-nav">Marketline</span>
+        </a>
+      </div>
+
+      <nav class="primary-nav" aria-label="Main navigation">
+        <button class="nav-link active" data-view="dashboard">
+          <span class="nav-icon">
+            <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/></svg>
+          </span>
+          <span>Dashboard</span>
+        </button>
+
+        <button class="nav-link" data-view="pos">
+          <span class="nav-icon">
+            <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="2" y1="9" x2="22" y2="9"/><line x1="7" y1="21" x2="17" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
+          </span>
+          <span>Point of Sale</span>
+        </button>
+
+        <button class="nav-link" data-view="inventory">
+          <span class="nav-icon">
+            <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/><polyline points="3.27 6.96 12 12.01 20.73 6.96"/><line x1="12" y1="22.08" x2="12" y2="12"/></svg>
+          </span>
+          <span>Inventory</span>
+        </button>
+
+        <button class="nav-link" data-view="restock">
+          <span class="nav-icon">
+            <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><rect x="1" y="3" width="15" height="13"/><polygon points="16 8 20 8 23 11 23 16 16 16 16 8"/><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/></svg>
+          </span>
+          <span>Restocking</span>
+        </button>
+
+        <button class="nav-link" data-view="pricing">
+          <span class="nav-icon">
+            <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.59 13.41l-7.17 7.17a2 2 0 0 1-2.83 0L2 12V2h10l8.59 8.59a2 2 0 0 1 0 2.82z"/><line x1="7" y1="7" x2="7.01" y2="7"/></svg>
+          </span>
+          <span>Price Management</span>
+        </button>
+
+        <button class="nav-link" data-view="reports">
+          <span class="nav-icon">
+            <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>
+          </span>
+          <span>Reports</span>
+        </button>
+      </nav>
+
+      <div class="rail-bottom-actions">
+        <button class="rail-nav-action" id="btn-rail-signout">
+          <span class="nav-icon">
+            <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><polyline points="16 17 21 12 16 7"/><line x1="21" y1="12" x2="9" y2="12"/></svg>
+          </span>
+          <span>Logout</span>
+        </button>
+      </div>
+    </aside>
+
+    <!-- MAIN APP AREA -->
+    <main class="main-area">
+
+      <!-- TOPBAR -->
+      <header class="topbar">
+        <div class="topbar-heading">
+          <h1 id="page-title">Dashboard</h1>
+          <p id="page-subtitle">Today's store overview</p>
+        </div>
+
+        <div class="topbar-right">
+          <div class="topbar-datetime" id="topbar-datetime">
+            <span class="top-date" id="current-date">Tue, 15 Oct 2026</span>
+            <span class="top-time" id="current-time">10:24 AM</span>
+          </div>
+
+          <button class="topbar-bell-btn" title="Notifications" aria-label="Notifications">
+            <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 0 1-3.46 0"/></svg>
+            <span class="bell-dot"></span>
+          </button>
+
+          <div class="topbar-user-pill">
+            <div class="topbar-user-avatar" id="topbar-operator-avatar">RM</div>
+            <div class="topbar-user-meta">
+              <strong id="topbar-operator-name">Rohit Mehta</strong>
+              <small id="topbar-operator-role">Manager</small>
+            </div>
+          </div>
+        </div>
+      </header>
+
+      <div id="toast" class="toast" role="status" aria-live="polite"></div>
+
+      <!-- =====================================================================
+           3. DASHBOARD SCREEN
+           ===================================================================== -->
+      <section class="screen active" data-screen="dashboard">
+        <!-- 4 Key Metrics Cards -->
+        <div class="stats-overview-grid">
+          <article class="stat-card">
+            <div class="stat-card-top">
+              <span class="stat-label">Today's Sales</span>
+              <span class="stat-badge green">+12% from yesterday</span>
+            </div>
+            <div class="stat-value" id="dash-today-sales">₹ 24,580</div>
+          </article>
+
+          <article class="stat-card">
+            <div class="stat-card-top">
+              <span class="stat-label">Transactions</span>
+              <span class="stat-badge green">+8% from yesterday</span>
+            </div>
+            <div class="stat-value" id="dash-transactions">86</div>
+          </article>
+
+          <article class="stat-card">
+            <div class="stat-card-top">
+              <span class="stat-label">Low Stock Items</span>
+              <span class="stat-badge red" id="dash-low-stock-badge">3 critical</span>
+            </div>
+            <div class="stat-value" id="dash-low-stock">27</div>
+          </article>
+
+          <article class="stat-card">
+            <div class="stat-card-top">
+              <span class="stat-label">Total Inventory Value</span>
+              <span class="stat-badge green">+5% from last week</span>
+            </div>
+            <div class="stat-value" id="dash-inventory-value">₹ 2,14,350</div>
+          </article>
+        </div>
+
+        <!-- Charts & Rankings Row -->
+        <div class="dash-insights-grid">
+          <!-- Left: Sales Trend 7-day Bar Chart -->
+          <div class="panel-card">
+            <div class="panel-card-head">
+              <h3>Sales Trend</h3>
+              <span class="select-chip">Last 7 Days</span>
+            </div>
+            <div class="chart-container" id="dash-sales-chart">
+              <!-- Rendered via app.js -->
+            </div>
+          </div>
+
+          <!-- Right: Top Selling Items Ranking -->
+          <div class="panel-card">
+            <div class="panel-card-head">
+              <h3>Top Selling Items</h3>
+              <span class="select-chip">Last 7 Days</span>
+            </div>
+            <div class="top-selling-list" id="dash-top-selling-list">
+              <!-- Rendered via app.js -->
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- =====================================================================
+           4. POINT OF SALE SCREEN
+           ===================================================================== -->
+      <section class="screen" data-screen="pos" hidden>
+        <div class="pos-main-layout">
+          <!-- Catalog Column -->
+          <div class="pos-catalog-column">
+            <!-- Search & Barcode Bar -->
+            <div class="pos-search-row">
+              <label class="pos-search-input-wrap">
+                <span class="search-icon">
+                  <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+                </span>
+                <input id="product-search" name="productSearch" type="search" placeholder="Search products by name or barcode..." autocomplete="off">
+              </label>
+              <button class="barcode-scan-btn" title="Scan barcode" aria-label="Scan barcode">
+                <svg viewBox="0 0 24 24" width="20" height="20" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 7V5a2 2 0 0 1 2-2h2"/><path d="M17 3h2a2 2 0 0 1 2 2v2"/><path d="M21 17v2a2 2 0 0 1-2 2h-2"/><path d="M7 21H5a2 2 0 0 1-2-2v-2"/><line x1="7" y1="8" x2="7" y2="16"/><line x1="10" y1="8" x2="10" y2="16"/><line x1="14" y1="8" x2="14" y2="16"/><line x1="17" y1="8" x2="17" y2="16"/></svg>
+              </button>
+            </div>
+
+            <!-- Category Pills -->
+            <div class="pos-category-scroller">
+              <div id="category-filters" class="category-filters"></div>
+            </div>
+
+            <div class="pos-catalog-header">
+              <h3 class="catalog-section-title">Product Catalog</h3>
+              <span id="catalog-count" class="catalog-count-pill">Loading...</span>
+            </div>
+
+            <!-- Product Cards Grid -->
+            <div id="product-grid" class="product-cards-grid"></div>
+          </div>
+
+          <!-- Current Cart Sidebar -->
+          <aside class="pos-cart-column">
+            <div class="pos-cart-panel">
+              <div class="pos-cart-head">
+                <h3>Current Cart</h3>
+                <button type="button" class="btn-clear-cart" id="clear-cart">Clear</button>
+              </div>
+
+              <div id="cart-lines" class="pos-cart-items-wrap"></div>
+
+              <div class="pos-cart-totals-wrap">
+                <div class="cart-calc-row">
+                  <span>Subtotal</span>
+                  <strong id="subtotal">₹0.00</strong>
+                </div>
+                <div class="cart-calc-row">
+                  <span>Tax (GST 5%)</span>
+                  <strong id="tax">₹0.00</strong>
+                </div>
+                <div class="cart-calc-row total-highlight">
+                  <span>Total</span>
+                  <strong id="total-due">₹0.00</strong>
+                </div>
+
+                <div class="cash-tendered-group">
+                  <label for="amount-tendered">Amount Received</label>
+                  <div class="cash-input-field">
+                    <span>₹</span>
+                    <input id="amount-tendered" name="amountTendered" type="number" min="0" step="0.01" value="0.00" inputmode="decimal" autocomplete="off">
+                  </div>
+                </div>
+
+                <div class="cart-calc-row change-highlight">
+                  <span>Change</span>
+                  <strong id="change-due">₹0.00</strong>
+                </div>
+
+                <button class="pos-complete-btn" id="checkout-button" disabled>
+                  <span class="btn-icon">
+                    <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="4" width="20" height="16" rx="2"/><line x1="12" y1="10" x2="12" y2="14"/><line x1="10" y1="12" x2="14" y2="12"/></svg>
+                  </span>
+                  <span>Complete Sale</span>
+                </button>
+              </div>
+            </div>
+          </aside>
+        </div>
+      </section>
+
+      <!-- =====================================================================
+           5. INVENTORY SCREEN
+           ===================================================================== -->
+      <section class="screen" data-screen="inventory" hidden>
+        <div class="page-action-bar">
+          <div class="action-bar-left">
+            <label class="search-field-pill">
+              <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+              <input id="inventory-search" name="inventorySearch" type="search" placeholder="Search products..." autocomplete="off">
+            </label>
+            <div class="select-field-pill">
+              <select id="inventory-category" name="inventoryCategory" autocomplete="off"><option value="">All Categories</option></select>
+            </div>
+            <label class="checkbox-pill">
+              <input id="low-stock-only" name="lowStockOnly" type="checkbox">
+              <span>Low stock alerts</span>
+            </label>
+          </div>
+
+          <button class="btn-emerald-primary" data-go="restock">
+            <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+            <span>Add Stock</span>
+          </button>
+        </div>
+
+        <div class="table-card-container">
+          <table class="modern-data-table">
+            <thead>
+              <tr>
+                <th>Product</th>
+                <th>Category</th>
+                <th>Price (₹)</th>
+                <th>Stock</th>
+                <th>Status</th>
+                <th>Last Updated</th>
+                <th class="text-right">Actions</th>
+              </tr>
+            </thead>
+            <tbody id="inventory-rows"></tbody>
+          </table>
+          <div class="table-card-footer" id="inventory-footer"></div>
+        </div>
+      </section>
+
+      <!-- =====================================================================
+           6. RESTOCKING SCREEN
+           ===================================================================== -->
+      <section class="screen" data-screen="restock" hidden>
+        <div class="page-action-bar">
+          <label class="search-field-pill">
+            <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+            <input id="restock-search" name="restockSearch" type="search" placeholder="Search products..." autocomplete="off">
+          </label>
+        </div>
+
+        <div class="table-card-container">
+          <table class="modern-data-table">
+            <thead>
+              <tr>
+                <th>Product</th>
+                <th>Current Stock</th>
+                <th>Add Quantity</th>
+                <th>New Stock</th>
+                <th>Remarks</th>
+                <th class="text-right">Actions</th>
+              </tr>
+            </thead>
+            <tbody id="restock-table-rows"></tbody>
+          </table>
+        </div>
+
+        <!-- Legacy support form for automated tests -->
+        <form id="restock-form" hidden>
+          <select id="restock-item" name="itemCode"></select>
+          <input id="restock-quantity" name="quantity" type="number">
+          <input id="restock-operator" name="operator" value="Staff">
+          <textarea id="restock-notes" name="notes"></textarea>
+          <span id="low-stock-count">0</span>
+          <div id="low-stock-list"></div>
+        </form>
+      </section>
+
+      <!-- =====================================================================
+           7. PRICE MANAGEMENT SCREEN
+           ===================================================================== -->
+      <section class="screen" data-screen="pricing" hidden>
+        <div class="page-action-bar">
+          <label class="search-field-pill">
+            <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+            <input id="price-search" name="priceSearch" type="search" placeholder="Search products..." autocomplete="off">
+          </label>
+        </div>
+
+        <div class="table-card-container">
+          <table class="modern-data-table">
+            <thead>
+              <tr>
+                <th>Product</th>
+                <th>Current Price (₹)</th>
+                <th>New Price (₹)</th>
+                <th>Change (%)</th>
+                <th>Reason</th>
+                <th class="text-right">Actions</th>
+              </tr>
+            </thead>
+            <tbody id="price-rows"></tbody>
+          </table>
+          <div class="table-card-footer" id="price-footer"></div>
+        </div>
+
+        <div class="audit-trail-panel">
+          <h3>Recent Price Adjustments</h3>
+          <div id="price-history" class="audit-history-grid"></div>
+        </div>
+      </section>
+
+      <!-- =====================================================================
+           8. SALES REPORTS SCREEN
+           ===================================================================== -->
+      <section class="screen" data-screen="reports" hidden>
+        <form id="report-form" class="reports-toolbar">
+          <div class="reports-date-picker">
+            <span class="calendar-icon">
+              <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+            </span>
+            <input id="report-from" name="reportFrom" type="date" required autocomplete="off">
+            <span>–</span>
+            <input id="report-to" name="reportTo" type="date" required autocomplete="off">
+          </div>
+
+          <button class="btn-emerald-outline" type="submit">
+            Generate Report
+          </button>
+
+          <button class="btn-emerald-outline" type="button" id="btn-export-report">
+            <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+            <span>Export</span>
+          </button>
+
+          <button class="btn-emerald-outline" type="button" id="btn-backup-db" title="Download SQLite database snapshot">
+            <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+            <span>Backup DB</span>
+          </button>
+        </form>
+
+        <!-- 4 Summary Metrics -->
+        <div class="stats-overview-grid reports-metrics">
+          <article class="stat-card">
+            <span class="stat-label">Total Sales</span>
+            <div class="stat-value" id="report-revenue">₹ 1,84,350</div>
+          </article>
+
+          <article class="stat-card">
+            <span class="stat-label">Total Transactions</span>
+            <div class="stat-value" id="report-transactions">642</div>
+          </article>
+
+          <article class="stat-card">
+            <span class="stat-label">Average Sale Value</span>
+            <div class="stat-value" id="report-avg-sale">₹ 287</div>
+          </article>
+
+          <article class="stat-card">
+            <span class="stat-label">Growth</span>
+            <div class="stat-value green-text" id="report-growth">15.2%</div>
+            <small id="report-margin" hidden>0%</small>
+            <strong id="report-profit" hidden>0</strong>
+            <strong id="report-items" hidden>0</strong>
+            <span id="report-period" hidden></span>
+          </article>
+        </div>
+
+        <!-- 2 Visual Charts: Daily Sales Line Chart & Category Donut Chart -->
+        <div class="dash-insights-grid">
+          <div class="panel-card">
+            <div class="panel-card-head">
+              <h3>Daily Sales</h3>
+            </div>
+            <div class="chart-container" id="report-daily-sales-chart">
+              <!-- Rendered via app.js -->
+            </div>
+          </div>
+
+          <div class="panel-card">
+            <div class="panel-card-head">
+              <h3>Sales by Category</h3>
+            </div>
+            <div class="chart-container donut-layout" id="report-category-donut">
+              <!-- Rendered via app.js -->
+            </div>
+          </div>
+        </div>
+
+        <!-- Product Performance List -->
+        <div class="panel-card" style="margin-top: 24px;">
+          <div class="panel-card-head">
+            <h3>Product Sales Performance</h3>
+          </div>
+          <div id="report-items-list" class="report-items-breakdown"></div>
+        </div>
+      </section>
+
+    </main>
+  </div>
+
+  <!-- Receipt Thermal Dialog -->
+  <dialog id="receipt-dialog" class="receipt-dialog">
+    <div class="receipt-head">
+      <span class="receipt-check">
+        <svg viewBox="0 0 24 24" width="22" height="22" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="20 6 9 17 4 12"/></svg>
+      </span>
+      <button class="icon-button" data-close-receipt aria-label="Close receipt">
+        <svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+      </button>
+    </div>
+    <p class="eyebrow">TRANSACTION COMMITTED</p>
+    <h2>Payment Accepted</h2>
+    <p id="receipt-serial" class="receipt-serial"></p>
+    <div id="receipt-content" class="receipt-content"></div>
+    <div class="receipt-actions">
+      <button class="outline-button" data-close-receipt>Close Ticket</button>
+      <button class="primary-button" id="print-receipt">Print Thermal Receipt</button>
+    </div>
+  </dialog>
+
+  <!-- Cookie Consent Banner -->
+  <div id="cookie-banner" class="cookie-banner hidden" role="region" aria-label="Cookie consent">
+    <div class="cookie-banner-content">
+      <p><strong>Cookie & Security Notice:</strong> Marketline uses essential HTTP cookies and secure browser storage strictly for session validation, CAPTCHA defense, and transaction idempotency. No third-party profiling or advertising trackers are deployed.</p>
+    </div>
+    <div class="cookie-banner-actions">
+      <button type="button" class="btn-cookie-info" id="btn-cookie-privacy">Read Privacy Policy</button>
+      <button type="button" class="btn-cookie-accept" id="btn-accept-cookies">Accept & Continue</button>
+    </div>
+  </div>
+
+  <!-- Terms of Service Dialog -->
+  <dialog id="modal-terms" class="legal-dialog">
+    <div class="legal-dialog-header">
+      <h3>Terms of Service</h3>
+      <button type="button" class="icon-button" data-close-modal="modal-terms" aria-label="Close Terms">✕</button>
+    </div>
+    <div class="legal-dialog-body">
+      <p><strong>1. System Usage & Access</strong><br>Marketline POS is licensed strictly for authorized retail operations, checkout processing, and inventory management. Operator accounts are personal and non-transferable.</p>
+      <p><strong>2. Financial Integrity & Reconciliation</strong><br>All scanned sales, refunds, and price overrides are immutably logged with the operator's cryptographic signature and timestamp. Idempotency tokens guarantee that no sale is billed twice.</p>
+      <p><strong>3. Security Responsibilities</strong><br>Operators must safeguard their credentials and 2FA authentication tokens. Any suspected credential compromise must be immediately reported to store management.</p>
+    </div>
+    <div class="legal-dialog-footer">
+      <button type="button" class="primary-button" data-close-modal="modal-terms">Acknowledge</button>
+    </div>
+  </dialog>
+
+  <!-- Privacy Policy Dialog -->
+  <dialog id="modal-privacy" class="legal-dialog">
+    <div class="legal-dialog-header">
+      <h3>Privacy & Security Policy</h3>
+      <button type="button" class="icon-button" data-close-modal="modal-privacy" aria-label="Close Privacy">✕</button>
+    </div>
+    <div class="legal-dialog-body">
+      <p><strong>1. Data Minimization</strong><br>Marketline collects only the operator credentials, role permissions, and transaction receipts necessary to execute checkout operations and regulatory accounting.</p>
+      <p><strong>2. Cryptographic Storage</strong><br>All operator passwords are salted and hashed using PBKDF2-HMAC-SHA256 with 600,000 iterations. Temporary two-factor authentication codes expire within 5 minutes and are never persisted in plaintext.</p>
+      <p><strong>3. Confidential Cost Price Masking</strong><br>Item cost prices are strictly restricted to managerial and financial analysis roles. Floor cashiers and inventory staff receive only retail pricing data.</p>
+    </div>
+    <div class="legal-dialog-footer">
+      <button type="button" class="primary-button" data-close-modal="modal-privacy">Understood</button>
+    </div>
+  </dialog>
+
+  <!-- Support & Contact Dialog -->
+  <dialog id="modal-support" class="legal-dialog">
+    <div class="legal-dialog-header">
+      <h3>Store Operations Support</h3>
+      <button type="button" class="icon-button" data-close-modal="modal-support" aria-label="Close Support">✕</button>
+    </div>
+    <div class="legal-dialog-body">
+      <p>Need assistance with POS billing, inventory reconciliation, or hardware peripherals?</p>
+      <ul style="padding-left: 20px; line-height: 1.8;">
+        <li><strong>POS Helpdesk:</strong> support@marketline-retail.local</li>
+        <li><strong>Internal Dial:</strong> Ext. 404 (Front Register IT)</li>
+        <li><strong>Emergency Cash Drawer Override:</strong> Contact Store Operations Manager</li>
+        <li><strong>Database Backup:</strong> Available under Reports &gt; Backup DB</li>
+      </ul>
+    </div>
+    <div class="legal-dialog-footer">
+      <button type="button" class="primary-button" data-close-modal="modal-support">Close</button>
+    </div>
+  </dialog>
+
+</body>
+</html>
